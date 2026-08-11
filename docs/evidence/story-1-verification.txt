@@ -1,0 +1,48 @@
+=== DATABASE VERIFICATION LOG ===
+Timestamp: 2026-08-11T14:32:26.977Z
+Connecting to PostgreSQL database: vela_keyboard on port 5433...
+
+Query result: Found 4 products in database.
+--------------------------------------------------
+ID: 1
+Name: Vela V1 75%
+SKU: VLA-K75
+Category: keyboard
+Price: Rp 1.850.000
+Stock: 12 units
+Active: true
+Image: /product-hero.png
+Description: 75% hot-swap keyboard, CNC aluminium case, volume knob.
+--------------------------------------------------
+ID: 2
+Name: Vela V1 Low-Profile
+SKU: VLA-K75-LP
+Category: keyboard
+Price: Rp 1.650.000
+Stock: 8 units
+Active: true
+Image: /product-top.png
+Description: Low-profile variant for light typing, same 75% layout.
+--------------------------------------------------
+ID: 3
+Name: Vela Switch Tactile 45g (10 pcs)
+SKU: VLA-SW-T45
+Category: switch
+Price: Rp 85.000
+Stock: 120 units
+Active: true
+Image: /product-detail.png
+Description: 45g tactile switches, factory lubed, 3-pin MX-style.
+--------------------------------------------------
+ID: 4
+Name: Vela V1 Barebones Kit
+SKU: VLA-K75-BB
+Category: kit
+Price: Rp 1.250.000
+Stock: 6 units
+Active: true
+Image: /product-exploded.png
+Description: Case, plate, gasket, and hot-swap PCB — build with your choice of switches and keycaps.
+--------------------------------------------------
+
+VERIFICATION SUCCESSFUL: All 4 Appendix products are successfully migrated and seeded in the database!
