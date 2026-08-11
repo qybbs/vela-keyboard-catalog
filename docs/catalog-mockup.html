@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vela Catalog Mockup</title>
+  <style>
+    :root {
+      --bg-color: #000000;
+      --border-color: #141414; /* Extremely subtle divider */
+      --text-primary: #ffffff;
+      --text-secondary: #86868b; /* Apple muted gray */
+      --accent-gold: #c5a880; /* Elegant bronze gold */
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-primary);
+      /* Using system font stack for native SF Pro rendering on macOS */
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+
+    /* Top Navigation */
+    header.navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 40px;
+      height: 64px;
+      border-bottom: 1px solid var(--border-color);
+      background-color: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(20px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 500;
+      font-size: 16px;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+      text-decoration: none;
+    }
+
+    /* Corrected asymmetrical geometric V logo */
+    .nav-logo svg {
+      width: 14px;
+      height: 14px;
+      fill: currentColor;
+    }
+
+    .nav-right-group {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      transition: color 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--text-primary);
+    }
+
+    .nav-actions .btn-buy {
+      background-color: var(--text-primary);
+      color: var(--bg-color);
+      border: none;
+      padding: 6px 16px;
+      border-radius: 9999px;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      transition: opacity 0.2s ease;
+    }
+
+    .nav-actions .btn-buy:hover {
+      opacity: 0.9;
+    }
+
+    /* Main Container */
+    main.catalog-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 100px 24px;
+    }
+
+    /* Hero Header */
+    .catalog-header {
+      text-align: left; /* Align-left to match original layout feel */
+      max-width: 600px;
+      margin-bottom: 90px;
+    }
+
+    .catalog-header h1 {
+      font-size: 64px;
+      font-weight: 400;
+      letter-spacing: -0.035em;
+      line-height: 1.1;
+      margin-bottom: 16px;
+      color: var(--text-primary);
+    }
+
+    .catalog-header p {
+      color: var(--text-secondary);
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      line-height: 1.5;
+      text-transform: lowercase; /* Original lowercase subheading style */
+    }
+
+    /* Controls Wrapper */
+    .controls-wrapper {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 70px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .search-box-container {
+      position: relative;
+      width: 100%;
+      max-width: 320px;
+    }
+
+    .search-box-container svg {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 14px;
+      height: 14px;
+      color: var(--text-secondary);
+      pointer-events: none;
+    }
+
+    .search-input {
+      width: 100%;
+      background-color: #0b0b0b;
+      border: 1px solid var(--border-color);
+      border-radius: 9999px;
+      padding: 10px 16px 10px 38px;
+      font-size: 13px;
+      color: var(--text-primary);
+      outline: none;
+      transition: border-color 0.2s ease;
+    }
+
+    .search-input:focus {
+      border-color: #2c2c2e;
+    }
+
+    .filter-tabs {
+      display: flex;
+      gap: 8px;
+    }
+
+    .filter-tab {
+      background-color: transparent;
+      color: var(--text-secondary);
+      border: 1px solid var(--border-color);
+      padding: 6px 18px;
+      border-radius: 9999px;
+      font-size: 12.5px;
+      font-weight: 400;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .filter-tab:hover {
+      color: var(--text-primary);
+      border-color: #2c2c2e;
+    }
+
+    .filter-tab.active {
+      background-color: var(--text-primary);
+      color: var(--bg-color);
+      border-color: var(--text-primary);
+      font-weight: 500;
+    }
+
+    /* Seamless Borderless Columns Grid */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      row-gap: 64px;
+      column-gap: 0; /* Let border dividers handle spacing */
+    }
+
+    /* Floating Product Card (Seamlessly blends into black background) */
+    .product-card {
+      background-color: transparent;
+      border: none;
+      display: flex;
+      flex-direction: column;
+      padding: 0 32px;
+      cursor: pointer;
+      position: relative;
+    }
+
+    /* Vertical Divider lines between grid items */
+    .product-card:not(:nth-child(3n)) {
+      border-right: 1px solid var(--border-color);
+    }
+
+    .card-image-wrapper {
+      background-color: transparent;
+      aspect-ratio: 1.25;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      margin-bottom: 28px;
+    }
+
+    .card-image-wrapper img {
+      max-width: 95%;
+      max-height: 95%;
+      object-fit: contain;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .product-card:hover .card-image-wrapper img {
+      transform: scale(1.03);
+    }
+
+    .card-details {
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    /* Category header with numeric indicator */
+    .card-category-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+
+    .card-index {
+      font-size: 10px;
+      font-weight: 500;
+      color: var(--accent-gold);
+      font-family: monospace;
+    }
+
+    .card-category {
+      font-size: 11px;
+      font-weight: 400;
+      text-transform: lowercase; /* Lowercase style of labels */
+      color: var(--text-secondary);
+    }
+
+    .card-title {
+      font-size: 20px;
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+      margin-bottom: 12px;
+      color: var(--text-primary);
+    }
+
+    .card-sku {
+      display: none; /* Hide SKU in frontend, or render subtle */
+    }
+
+    .card-description {
+      font-size: 13.5px;
+      font-weight: 300;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 24px;
+      flex-grow: 1;
+    }
+
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 16px;
+    }
+
+    .card-price {
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--text-primary);
+    }
+
+    .card-stock {
+      font-size: 11px;
+      color: var(--accent-gold);
+      text-decoration: none;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: color 0.2s ease;
+    }
+
+    .card-stock::after {
+      content: "→";
+      font-family: system-ui;
+      font-size: 12px;
+      transition: transform 0.2s ease;
+    }
+
+    .product-card:hover .card-stock::after {
+      transform: translateX(3px);
+    }
+
+    /* No Products Found */
+    .no-results {
+      text-align: center;
+      padding: 80px 0;
+      color: var(--text-secondary);
+      grid-column: 1 / -1;
+      display: none;
+    }
+
+    .no-results h3 {
+      color: var(--text-primary);
+      margin-bottom: 8px;
+      font-size: 18px;
+    }
+
+    /* Footer */
+    footer.catalog-footer {
+      border-top: 1px solid var(--border-color);
+      padding: 60px 40px;
+      background-color: #000000;
+      margin-top: 0;
+    }
+
+    .footer-content {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 32px;
+    }
+
+    .footer-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 12px;
+      transition: color 0.2s ease;
+    }
+
+    .footer-links a:hover {
+      color: var(--text-primary);
+    }
+
+    .footer-copyright {
+      color: var(--text-secondary);
+      font-size: 12px;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 900px) {
+      .products-grid {
+        grid-template-columns: 1fr;
+        row-gap: 80px;
+      }
+      .product-card {
+        padding: 0;
+        border-right: none !important;
+      }
+      .controls-wrapper {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .search-box-container {
+        max-width: 100%;
+      }
+      .filter-tabs {
+        justify-content: flex-start;
+        overflow-x: auto;
+        padding-bottom: 8px;
+      }
+    }
+
+    /* Subscription Section */
+    .subscription-section {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 40px 0 0 0;
+      border-top: 1px solid var(--border-color);
+      margin-top: 80px;
+    }
+
+    .subscription-left h2 {
+      font-size: 40px;
+      font-weight: 400;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 12px;
+      color: var(--text-primary);
+    }
+
+    .subscription-left p {
+      color: var(--text-secondary);
+      font-size: 14.5px;
+      font-weight: 300;
+      letter-spacing: -0.01em;
+    }
+
+    .subscription-right {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      width: 100%;
+      max-width: 440px;
+    }
+
+    .input-wrapper {
+      display: flex;
+      align-items: center;
+      background-color: #000000;
+      border: 1px solid #222222;
+      border-radius: 9999px;
+      padding: 4px 4px 4px 20px;
+      width: 100%;
+      height: 48px;
+      transition: border-color 0.2s ease;
+    }
+
+    .input-wrapper:focus-within {
+      border-color: #444444;
+    }
+
+    .input-wrapper input {
+      flex-grow: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: var(--text-primary);
+      font-size: 13.5px;
+      font-weight: 300;
+    }
+
+    .input-wrapper input::placeholder {
+      color: var(--text-secondary);
+    }
+
+    .input-wrapper button {
+      background-color: var(--text-primary);
+      color: var(--bg-color);
+      border: none;
+      padding: 0 24px;
+      height: 40px;
+      border-radius: 9999px;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: opacity 0.2s ease;
+    }
+
+    .input-wrapper button:hover {
+      opacity: 0.9;
+    }
+
+    .subscription-right span {
+      color: var(--text-secondary);
+      font-size: 11.5px;
+      font-weight: 300;
+      padding-left: 20px;
+    }
+
+    @media (max-width: 768px) {
+      .subscription-section {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 40px;
+        padding: 60px 0 20px 0;
+      }
+      .subscription-right {
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation Header -->
+  <header class="navbar">
+    <a href="#" class="nav-logo">
+      <!-- Corrected asymmetrical logo V -->
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M2 3h5.5L12 15l4.5-12H22L14 21h-4L2 3z"/>
+      </svg>
+      Vela
+    </a>
+    
+    <!-- All links and actions on the right side -->
+    <div class="nav-right-group">
+      <ul class="nav-links">
+        <li><a href="#">Design</a></li>
+        <li><a href="#">Feel</a></li>
+        <li><a href="#">Sound</a></li>
+        <li><a href="#">Specs</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="#" class="btn-buy">Buy</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="catalog-container">
+    
+    <!-- Hero / Intro -->
+    <div class="catalog-header">
+      <h1>Precision<br>you can feel.</h1>
+      <p>engineered for focus and built to last.</p>
+    </div>
+
+    <!-- Filter & Search Controls -->
+    <div class="controls-wrapper">
+      
+      <!-- Search Input -->
+      <div class="search-box-container">
+        <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" id="searchInput" class="search-input" placeholder="Search by name or SKU...">
+      </div>
+
+      <!-- Category Filter Tabs -->
+      <div class="filter-tabs">
+        <button class="filter-tab active" data-category="all">All Items</button>
+        <button class="filter-tab" data-category="keyboard">Keyboards</button>
+        <button class="filter-tab" data-category="switch">Switches</button>
+        <button class="filter-tab" data-category="kit">Kits</button>
+      </div>
+
+    </div>
+
+    <!-- Product Grid (Borderless Columns) -->
+    <div class="products-grid" id="productsGrid">
+      
+      <!-- Card 1 -->
+      <div class="product-card" data-category="keyboard" data-name="vela v1 75%" data-sku="vla-k75">
+        <div class="card-image-wrapper">
+          <img src="vela-assets/product-hero.png" alt="Vela V1 75%">
+        </div>
+        <div class="card-details">
+          <div class="card-category-wrapper">
+            <span class="card-index">01</span>
+            <span class="card-category">keyboard</span>
+          </div>
+          <h2 class="card-title">Vela V1 75%</h2>
+          <p class="card-description">75% hot-swap keyboard, CNC aluminium case, volume knob.</p>
+          <div class="card-footer">
+            <span class="card-price">Rp 1.850.000</span>
+            <span class="card-stock">learn more</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="product-card" data-category="keyboard" data-name="vela v1 low-profile" data-sku="vla-k75-lp">
+        <div class="card-image-wrapper">
+          <img src="vela-assets/product-top.png" alt="Vela V1 Low-Profile">
+        </div>
+        <div class="card-details">
+          <div class="card-category-wrapper">
+            <span class="card-index">02</span>
+            <span class="card-category">keyboard</span>
+          </div>
+          <h2 class="card-title">Vela V1 Low-Profile</h2>
+          <p class="card-description">Low-profile variant for light typing, same 75% layout.</p>
+          <div class="card-footer">
+            <span class="card-price">Rp 1.650.000</span>
+            <span class="card-stock">learn more</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="product-card" data-category="switch" data-name="vela switch tactile 45g (10 pcs)" data-sku="vla-sw-t45">
+        <div class="card-image-wrapper">
+          <img src="vela-assets/product-detail.png" alt="Vela Switch Tactile 45g">
+        </div>
+        <div class="card-details">
+          <div class="card-category-wrapper">
+            <span class="card-index">03</span>
+            <span class="card-category">switch</span>
+          </div>
+          <h2 class="card-title">Vela Switch Tactile (10 pcs)</h2>
+          <p class="card-description">45g tactile switches, factory lubed, 3-pin MX-style.</p>
+          <div class="card-footer">
+            <span class="card-price">Rp 85.000</span>
+            <span class="card-stock">learn more</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- No Products Found Element -->
+      <div class="no-results" id="noResults">
+        <h3>No Products Found</h3>
+        <p>Try refining your search terms or changing your category filter.</p>
+      </div>
+
+    </div>
+
+    <!-- Subscription Newsletter Section (Make the desk quieter) -->
+    <div class="subscription-section">
+      <div class="subscription-left">
+        <h2>Make the<br>desk quieter.</h2>
+        <p>Join thousands building a better workspace.</p>
+      </div>
+      <div class="subscription-right">
+        <div class="input-wrapper">
+          <input type="email" placeholder="Enter your email" aria-label="Enter your email">
+          <button type="button">Notify me</button>
+        </div>
+        <span>Early access. Product updates. No spam.</span>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="catalog-footer">
+    <div class="footer-content">
+      <a href="#" class="nav-logo">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M2 3h5.5L12 15l4.5-12H22L14 21h-4L2 3z"/>
+        </svg>
+        Vela
+      </a>
+      <div class="footer-links">
+        <a href="#">Support</a>
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+      </div>
+      <div class="footer-copyright">
+        &copy; 2026 Vela Labs. Crafted for focused work.
+      </div>
+    </div>
+  </footer>
+
+  <!-- Mockup Interactions JS -->
+  <script>
+    const searchInput = document.getElementById('searchInput');
+    const filterTabs = document.querySelectorAll('.filter-tab');
+    const productCards = document.querySelectorAll('.product-card');
+    const noResults = document.getElementById('noResults');
+
+    let currentCategory = 'all';
+    let searchQuery = '';
+
+    // Filter Logic
+    function applyFilters() {
+      let visibleCount = 0;
+
+      productCards.forEach((card, index) => {
+        const category = card.getAttribute('data-category');
+        const name = card.getAttribute('data-name');
+        const sku = card.getAttribute('data-sku');
+
+        const matchesCategory = currentCategory === 'all' || category === currentCategory;
+        const matchesSearch = name.includes(searchQuery) || sku.includes(searchQuery);
+
+        if (matchesCategory && matchesSearch) {
+          card.style.display = 'flex';
+          visibleCount++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      // Recalculate border dividers dynamically for visible cards
+      let visibleCards = Array.from(productCards).filter(c => c.style.display !== 'none');
+      
+      // Clear borders
+      productCards.forEach(c => c.style.borderRight = 'none');
+      
+      // Set right borders dynamically for elements not on the right edge
+      visibleCards.forEach((card, idx) => {
+        if ((idx + 1) % 3 !== 0 && idx !== visibleCards.length - 1) {
+          card.style.borderRight = '1px solid var(--border-color)';
+        }
+      });
+
+      if (visibleCount === 0) {
+        noResults.style.display = 'block';
+      } else {
+        noResults.style.display = 'none';
+      }
+    }
+
+    // Search Event
+    searchInput.addEventListener('input', (e) => {
+      searchQuery = e.target.value.toLowerCase().trim();
+      applyFilters();
+    });
+
+    // Category Tabs Event
+    filterTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        filterTabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        currentCategory = tab.getAttribute('data-category');
+        applyFilters();
+      });
+    });
+  </script>
+</body>
+</html>
