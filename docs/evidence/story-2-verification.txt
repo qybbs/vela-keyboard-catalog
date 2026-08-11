@@ -1,0 +1,285 @@
+=== API ENDPOINT VERIFICATION LOG ===
+Timestamp: 2026-08-11T14:53:05.130Z
+Testing GET /product-service/products on http://localhost:3000...
+
+TEST: Fetch all active products (No filters)
+URL: http://localhost:3000/product-service/products
+HTTP Status: 200 OK
+Response payload:
+{
+  "content": [
+    {
+      "id": 1,
+      "name": "Vela V1 75%",
+      "sku": "VLA-K75",
+      "category": "keyboard",
+      "price": 1850000,
+      "stock": 12,
+      "active": true,
+      "image": "/product-hero.png",
+      "description": "75% hot-swap keyboard, CNC aluminium case, volume knob.",
+      "createdAt": "2026-08-11T14:31:44.919Z",
+      "updatedAt": "2026-08-11T14:31:44.919Z"
+    },
+    {
+      "id": 2,
+      "name": "Vela V1 Low-Profile",
+      "sku": "VLA-K75-LP",
+      "category": "keyboard",
+      "price": 1650000,
+      "stock": 8,
+      "active": true,
+      "image": "/product-top.png",
+      "description": "Low-profile variant for light typing, same 75% layout.",
+      "createdAt": "2026-08-11T14:31:44.998Z",
+      "updatedAt": "2026-08-11T14:31:44.998Z"
+    },
+    {
+      "id": 3,
+      "name": "Vela Switch Tactile 45g (10 pcs)",
+      "sku": "VLA-SW-T45",
+      "category": "switch",
+      "price": 85000,
+      "stock": 120,
+      "active": true,
+      "image": "/product-detail.png",
+      "description": "45g tactile switches, factory lubed, 3-pin MX-style.",
+      "createdAt": "2026-08-11T14:31:44.999Z",
+      "updatedAt": "2026-08-11T14:31:44.999Z"
+    },
+    {
+      "id": 4,
+      "name": "Vela V1 Barebones Kit",
+      "sku": "VLA-K75-BB",
+      "category": "kit",
+      "price": 1250000,
+      "stock": 6,
+      "active": true,
+      "image": "/product-exploded.png",
+      "description": "Case, plate, gasket, and hot-swap PCB — build with your choice of switches and keycaps.",
+      "createdAt": "2026-08-11T14:31:45.000Z",
+      "updatedAt": "2026-08-11T14:31:45.000Z"
+    }
+  ],
+  "pageable": {
+    "page": 1,
+    "limit": 10,
+    "total": 4,
+    "totalPages": 1
+  }
+}
+--------------------------------------------------
+
+TEST: Search by term "Low-Profile"
+URL: http://localhost:3000/product-service/products?search=Low-Profile
+HTTP Status: 200 OK
+Response payload:
+{
+  "content": [
+    {
+      "id": 2,
+      "name": "Vela V1 Low-Profile",
+      "sku": "VLA-K75-LP",
+      "category": "keyboard",
+      "price": 1650000,
+      "stock": 8,
+      "active": true,
+      "image": "/product-top.png",
+      "description": "Low-profile variant for light typing, same 75% layout.",
+      "createdAt": "2026-08-11T14:31:44.998Z",
+      "updatedAt": "2026-08-11T14:31:44.998Z"
+    }
+  ],
+  "pageable": {
+    "page": 1,
+    "limit": 10,
+    "total": 1,
+    "totalPages": 1
+  }
+}
+--------------------------------------------------
+
+TEST: Filter by category "switch"
+URL: http://localhost:3000/product-service/products?category=switch
+HTTP Status: 200 OK
+Response payload:
+{
+  "content": [
+    {
+      "id": 3,
+      "name": "Vela Switch Tactile 45g (10 pcs)",
+      "sku": "VLA-SW-T45",
+      "category": "switch",
+      "price": 85000,
+      "stock": 120,
+      "active": true,
+      "image": "/product-detail.png",
+      "description": "45g tactile switches, factory lubed, 3-pin MX-style.",
+      "createdAt": "2026-08-11T14:31:44.999Z",
+      "updatedAt": "2026-08-11T14:31:44.999Z"
+    }
+  ],
+  "pageable": {
+    "page": 1,
+    "limit": 10,
+    "total": 1,
+    "totalPages": 1
+  }
+}
+--------------------------------------------------
+
+TEST: Filter by category "keyboard" and search by term "Vela"
+URL: http://localhost:3000/product-service/products?category=keyboard&search=Vela
+HTTP Status: 200 OK
+Response payload:
+{
+  "content": [
+    {
+      "id": 1,
+      "name": "Vela V1 75%",
+      "sku": "VLA-K75",
+      "category": "keyboard",
+      "price": 1850000,
+      "stock": 12,
+      "active": true,
+      "image": "/product-hero.png",
+      "description": "75% hot-swap keyboard, CNC aluminium case, volume knob.",
+      "createdAt": "2026-08-11T14:31:44.919Z",
+      "updatedAt": "2026-08-11T14:31:44.919Z"
+    },
+    {
+      "id": 2,
+      "name": "Vela V1 Low-Profile",
+      "sku": "VLA-K75-LP",
+      "category": "keyboard",
+      "price": 1650000,
+      "stock": 8,
+      "active": true,
+      "image": "/product-top.png",
+      "description": "Low-profile variant for light typing, same 75% layout.",
+      "createdAt": "2026-08-11T14:31:44.998Z",
+      "updatedAt": "2026-08-11T14:31:44.998Z"
+    }
+  ],
+  "pageable": {
+    "page": 1,
+    "limit": 10,
+    "total": 2,
+    "totalPages": 1
+  }
+}
+--------------------------------------------------
+
+TEST: Pagination (Page 1, Limit 2)
+URL: http://localhost:3000/product-service/products?page=1&limit=2
+HTTP Status: 200 OK
+Response payload:
+{
+  "content": [
+    {
+      "id": 1,
+      "name": "Vela V1 75%",
+      "sku": "VLA-K75",
+      "category": "keyboard",
+      "price": 1850000,
+      "stock": 12,
+      "active": true,
+      "image": "/product-hero.png",
+      "description": "75% hot-swap keyboard, CNC aluminium case, volume knob.",
+      "createdAt": "2026-08-11T14:31:44.919Z",
+      "updatedAt": "2026-08-11T14:31:44.919Z"
+    },
+    {
+      "id": 2,
+      "name": "Vela V1 Low-Profile",
+      "sku": "VLA-K75-LP",
+      "category": "keyboard",
+      "price": 1650000,
+      "stock": 8,
+      "active": true,
+      "image": "/product-top.png",
+      "description": "Low-profile variant for light typing, same 75% layout.",
+      "createdAt": "2026-08-11T14:31:44.998Z",
+      "updatedAt": "2026-08-11T14:31:44.998Z"
+    }
+  ],
+  "pageable": {
+    "page": 1,
+    "limit": 2,
+    "total": 4,
+    "totalPages": 2
+  }
+}
+--------------------------------------------------
+
+TEST: Pagination (Page 2, Limit 2)
+URL: http://localhost:3000/product-service/products?page=2&limit=2
+HTTP Status: 200 OK
+Response payload:
+{
+  "content": [
+    {
+      "id": 3,
+      "name": "Vela Switch Tactile 45g (10 pcs)",
+      "sku": "VLA-SW-T45",
+      "category": "switch",
+      "price": 85000,
+      "stock": 120,
+      "active": true,
+      "image": "/product-detail.png",
+      "description": "45g tactile switches, factory lubed, 3-pin MX-style.",
+      "createdAt": "2026-08-11T14:31:44.999Z",
+      "updatedAt": "2026-08-11T14:31:44.999Z"
+    },
+    {
+      "id": 4,
+      "name": "Vela V1 Barebones Kit",
+      "sku": "VLA-K75-BB",
+      "category": "kit",
+      "price": 1250000,
+      "stock": 6,
+      "active": true,
+      "image": "/product-exploded.png",
+      "description": "Case, plate, gasket, and hot-swap PCB — build with your choice of switches and keycaps.",
+      "createdAt": "2026-08-11T14:31:45.000Z",
+      "updatedAt": "2026-08-11T14:31:45.000Z"
+    }
+  ],
+  "pageable": {
+    "page": 2,
+    "limit": 2,
+    "total": 4,
+    "totalPages": 2
+  }
+}
+--------------------------------------------------
+
+TEST: Search with no results
+URL: http://localhost:3000/product-service/products?search=NonExistentProduct
+HTTP Status: 200 OK
+Response payload:
+{
+  "content": [],
+  "pageable": {
+    "page": 1,
+    "limit": 10,
+    "total": 0,
+    "totalPages": 0
+  }
+}
+--------------------------------------------------
+
+TEST: Validation Error (Page < 1)
+URL: http://localhost:3000/product-service/products?page=0
+HTTP Status: 400 Bad Request
+Response payload:
+{
+  "error": "Bad Request",
+  "message": "Invalid query parameters",
+  "details": {
+    "page": [
+      "Page must be a number greater than or equal to 1"
+    ]
+  }
+}
+--------------------------------------------------
