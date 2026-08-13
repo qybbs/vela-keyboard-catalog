@@ -28,6 +28,7 @@ export default function CatalogPage() {
   const [email, setEmail] = useState('');
   const [isSubscribed, setIsSubscribed] = useState(false);
   const [isBuyModalOpen, setIsBuyModalOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // Fetch logic
   const fetchProducts = useCallback(async () => {
@@ -85,8 +86,8 @@ export default function CatalogPage() {
   return (
     <>
       {/* Top Navigation */}
-      <header className="navbar">
-        <a href="#" className="nav-logo">
+      <header className={`navbar ${isMobileMenuOpen ? 'mobile-menu-active' : ''}`}>
+        <a href="#" className="nav-logo" onClick={() => setIsMobileMenuOpen(false)}>
           {/* Asymmetric geometric sharp V logo */}
           <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path d="M2 3h5.5L12 15l4.5-12H22L14 21h-4L2 3z" />
@@ -104,7 +105,31 @@ export default function CatalogPage() {
             <button className="btn-buy" onClick={() => setIsBuyModalOpen(true)}>Buy</button>
           </div>
         </div>
+        
+        {/* Mobile Actions */}
+        <div className="nav-mobile-actions">
+          <button className="btn-buy-mobile" onClick={() => { setIsBuyModalOpen(true); setIsMobileMenuOpen(false); }}>Buy</button>
+          <button 
+            className={`hamburger-btn ${isMobileMenuOpen ? 'open' : ''}`} 
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label="Toggle menu"
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
       </header>
+
+      {/* Mobile Menu Drawer Overlay */}
+      <div className={`mobile-menu-overlay ${isMobileMenuOpen ? 'open' : ''}`}>
+        <ul className="mobile-nav-links">
+          <li><a href="#design" onClick={() => setIsMobileMenuOpen(false)}>Design</a></li>
+          <li><a href="#feel" onClick={() => setIsMobileMenuOpen(false)}>Feel</a></li>
+          <li><a href="#sound" onClick={() => setIsMobileMenuOpen(false)}>Sound</a></li>
+          <li><a href="#specs" onClick={() => setIsMobileMenuOpen(false)}>Specs</a></li>
+        </ul>
+      </div>
 
       {/* Hero Section — Full-bleed with background image */}
       <section className="hero-section">
@@ -172,13 +197,10 @@ export default function CatalogPage() {
         <div className="products-grid">
           {products.length > 0 ? (
             products.map((product, idx) => {
-              // Calculate if this column needs a right-border divider (3-column layout)
-              const showDivider = (idx % 3 !== 2) && (idx !== products.length - 1);
-
               return (
                 <div 
                   key={product.id} 
-                  className={`product-card ${showDivider ? 'product-card-divider' : ''}`}
+                  className="product-card"
                   style={{ '--card-idx': idx } as React.CSSProperties}
                 >
                   <div className="card-image-wrapper">
